@@ -1,0 +1,14 @@
+{
+  "name": "divvy",
+  "version": "1.0.0",
+  "description": "Gives the count of number of bikes and docks of particular stations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ullas",
+  "license": "MIT",
+  "dependencies": {
+    "@types/request": "0.0.45"
+  }
+}
