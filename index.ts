@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as request from 'request';
+import  {divvyBikes} from './divvyJsonStructure';
 
 var app:express.Application = express();
 
@@ -10,35 +11,7 @@ app.use(function(req, res, next) {
 });
 
 
- interface divvyInterface {
-  executionTime: string;
-  stationBeanList?: (StationBeanListEntity)[] | null;
-}
- interface StationBeanListEntity {
-  id: number;
-  stationName: string;
-  availableDocks: number;
-  totalDocks: number;
-  latitude: number;
-  longitude: number;
-  statusValue: string;
-  statusKey: number;
-  status: string;
-  availableBikes: number;
-  stAddress1: string;
-  stAddress2: string;
-  city: string;
-  postalCode: string;
-  location: string;
-  altitude: string;
-  testStation: boolean;
-  lastCommunicationTime: string;
-  landMark: string;
-  is_renting: boolean;
-}
-
-
-
+ 
 
 
 
@@ -46,35 +19,25 @@ var options:request.Options = {
   method:'GET',
   url:'https://feeds.divvybikes.com/stations/stations.json'
 };
-var divvyResponse:any ;
+var apiResponse:divvyBikes;
+var divvyResponse:any;
 
 app.get('/',(req:express.request, res:express.Response)=>{
   
 request(options,(error, response:request.RequestResponse, body)=>
 {
-      divvyResponse = response;
-      var divvyResponse2  = response.body;
+     apiResponse = JSON.parse(body);
       
-      if(divvyResponse == null)
+      if(error)
       {
-              if(error!=null)
-              {
-                res.send(error);
-              }
-              else
-              {
-                res.send("Failed getting response from the divvy server");
-              }
+        res.send(error);
       }
       else
       {
-        console.log(divvyResponse);
-          res.send(response.body);
+        res.send(apiResponse.executionTime);
       }
       
 });
-
-
 
 
 });

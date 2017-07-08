@@ -12,22 +12,16 @@ var options = {
     method: 'GET',
     url: 'https://feeds.divvybikes.com/stations/stations.json'
 };
+var apiResponse;
 var divvyResponse;
 app.get('/', function (req, res) {
     request(options, function (error, response, body) {
-        divvyResponse = response;
-        var divvyResponse2 = response.body;
-        if (divvyResponse == null) {
-            if (error != null) {
-                res.send(error);
-            }
-            else {
-                res.send("Failed getting response from the divvy server");
-            }
+        apiResponse = JSON.parse(body);
+        if (error) {
+            res.send(error);
         }
         else {
-            console.log(divvyResponse[0]);
-            res.send(response.body);
+            res.send(apiResponse.executionTime);
         }
     });
 });
